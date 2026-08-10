@@ -22,7 +22,7 @@ const registerUser = async (req, res) => {
             username,
             email,
             password
-        })
+        });
 
 
         return res.status(201).json({
@@ -33,7 +33,7 @@ const registerUser = async (req, res) => {
                 email: user.email
             }
 
-        })
+        });
 
     } catch (error) {
 
