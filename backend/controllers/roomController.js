@@ -34,6 +34,24 @@ const createRoom = async (req, res) => {
 
 }
 
-module.exports= {createRoom};
+
+const getRooms = async (req, res) => {
+    try {
+
+        const rooms = await Room.find().populate("createdBy", "username profilePic");
+
+        return res.status(200).json({ 
+            message: "Rooms retrieved successfully",
+            rooms 
+        });
+
+    } catch (error) {
+       return res.status(500).json({
+            message: error.message});
+    }
+
+}
+
+module.exports = { createRoom, getRooms };
 
 
