@@ -40,18 +40,41 @@ const getRooms = async (req, res) => {
 
         const rooms = await Room.find().populate("createdBy", "username profilePic");
 
-        return res.status(200).json({ 
+        return res.status(200).json({
             message: "Rooms retrieved successfully",
-            rooms 
+            rooms
         });
 
     } catch (error) {
-       return res.status(500).json({
-            message: error.message});
+        return res.status(500).json({
+            message: error.message
+        });
     }
 
 }
 
-module.exports = { createRoom, getRooms };
+const getOneRoom = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        const room = await Room.findById(id).populate("createdBy", "username profilePic");
+
+        if (!room) {
+            return res.status(404).json({ message: "Room not found" })
+        }
+
+        return res.status(200).json({
+            message: "Room retrieved successfully",
+            room
+        });
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+module.exports = { createRoom, getRooms, getOneRoom };
 
 
