@@ -112,7 +112,7 @@ const updateRoom = async (req, res) => {
         })
 
     } catch (error) {
-        
+
         if (error.name === "ValidationError") {
             return res.status(400).json({
                 message: error.message
@@ -126,6 +126,40 @@ const updateRoom = async (req, res) => {
     }
 }
 
-module.exports = { createRoom, getRooms, getOneRoom, updateRoom };
+
+const deleteRoom = async (req, res) => {
+
+    try{
+
+        const {id} = req.params;
+
+        const room = await Room.findById(id);
+
+        if(!room){
+            return res.status(404).json({message:"Room not found"});
+        }
+
+        if(!room.createdBy.equals(req.user._id)){
+            return res.status(403).json({message:"Not allowed to delete the room"})
+        }
+
+        await room.deleteOne();
+
+        return res.status(200).json({
+            message:"Room deleted  Successfully "
+        })
+
+        
+
+
+
+
+    }catch(error){
+        return res.status(500).json({message:error.message});
+    }
+
+}
+
+module.exports = { createRoom, getRooms, getOneRoom, updateRoom,deleteRoom };
 
 
