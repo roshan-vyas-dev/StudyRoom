@@ -4,6 +4,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const roomRoutes = require("./routes/roomRoutes");
+const studySessionRoutes = require("./routes/studySessionRoutes");
 
 
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use("/api/auth",authRoutes);
 app.use("/api/users",userRoutes);
 app.use("/api/rooms",roomRoutes);
+app.use("/api/study-sessions",studySessionRoutes);
 
 
 
